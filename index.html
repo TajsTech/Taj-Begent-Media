@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taj Begent Media</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="logo">Taj Begent Media</div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero/Home Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Sound · Video · Lighting</h1>
+      <p>Professional AV services for your events, productions and businesses.</p>
+      <a href="#contact" class="btn">Get in Touch</a>
+    </div>
+  </section>
+
+<!-- About Section -->
+<section id="about">
+  <h2>About Us</h2>
+  <p>
+    At Taj Begent Media, we specialize in delivering high-quality sound, video, and lighting solutions. 
+    From small gigs to large corporate events, our mission is to make every production run smoothly and look professional.
+  </p>
+  <div class="about-logo">
+    <img src="images/Taj Begent Media_Transparent.png" alt="Taj Begent Media Logo">
+  </div>
+</section>
+
+
+<!-- Gallery Section -->
+<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="gallery-grid" id="gallery-container">
+    <!-- JS will load gallery images here -->
+  </div>
+</section>
+
+<!-- Load Gallery Images from JSON -->
+<script>
+  fetch("data/galary.json")
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('gallery-container');
+      data.forEach(img => {
+        // Ignore empty placeholders if needed
+        if (img.src && img.src !== "_placeholder") {
+          const image = document.createElement('img');
+          image.src = img.src;
+          image.alt = img.alt || '';
+          container.appendChild(image);
+        }
+      });
+    })
+    .catch(err => {
+      console.error('Error loading gallery:', err);
+    });
+</script>
+
+
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonials-container" id="testimonials-container">
+      <!-- JS will load testimonials here -->
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+<section id="contact">
+  <h2>Contact Us</h2>
+
+  <!-- Formspree Contact Form -->
+  <form action="https://formspree.io/f/meorqpqk" method="POST">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="_replyto" required>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+    </div>
+
+    <button type="submit" class="btn">Send Message</button>
+  </form>
+
+  <!-- Direct Contact Info -->
+  <div class="direct-contact">
+    <p>Or reach us directly:</p>
+    <p>Email: <a href="mailto:tajstech@gmail.com">Tajstech@gmail.com</a></p>
+    <p>Phone: +61 0444 587 386</p>
+    <p>Instagram: <a href="https://instagram.com/tajbegentmedia" target="_blank">@TAJ_BEGENT_MEDIA</a></p>
+  </div>
+</section>
+
+
+<!-- Load Testimonials from JSON -->
+<script>
+  fetch('data/testimonials.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('testimonials-container');
+
+      // Filter out placeholder entries
+      const validTestimonials = data.filter(t => 
+        t.name !== "_placeholder" && t.quote !== "_empty"
+      );
+
+      validTestimonials.forEach(t => {
+        const div = document.createElement('div');
+        div.classList.add('testimonial');
+        div.innerHTML = `
+          <p>"${t.quote}"</p>
+          <h4>- ${t.name}${t.role ? ', ' + t.role : ''}</h4>
+        `;
+        container.appendChild(div);
+      });
+
+      // Optional: show a message if no real testimonials exist
+      if (validTestimonials.length === 0) {
+        const div = document.createElement('div');
+        div.classList.add('testimonial');
+        div.innerHTML = `
+          <p>"Client testimonials coming soon! Stay tuned for feedback from our first events."</p>
+          <h4>- Taj Begent Media</h4>
+        `;
+        container.appendChild(div);
+      }
+    })
+    .catch(err => {
+      console.error('Error loading testimonials:', err);
+    });
+</script>
+
+</body>
+<!-- Footer -->
+<footer>
+  <p>© 2025 Taj Begent Media. All Rights Reserved.</p>
+</footer>
+</html>
