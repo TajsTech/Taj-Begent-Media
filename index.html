@@ -24,7 +24,7 @@
   <!-- Hero/Home Section -->
   <section id="home" class="hero">
     <div class="hero-content">
-      <h1>Sound · Video · Lighting</h1>
+      <h1>SOUND· VIDEO · LIGHTING</h1>
       <p>Professional AV services for your events, productions and businesses.</p>
       <a href="#contact" class="btn">Get in Touch</a>
     </div>
@@ -46,31 +46,51 @@
 <!-- Gallery Section -->
 <section id="gallery">
   <h2>Gallery</h2>
-  <div class="gallery-grid" id="gallery-container">
-    <!-- JS will load gallery images here -->
+  <div class="carousel" id="gallery-carousel">
+    <!-- JS will load gallery images here as carousel items -->
   </div>
 </section>
 
-<!-- Load Gallery Images from JSON -->
+<!-- Load Gallery Images from JSON and create carousel -->
 <script>
-  fetch("data/galary.json")
-    .then(response => response.json())
-    .then(data => {
-      const container = document.getElementById('gallery-container');
-      data.forEach(img => {
-        // Ignore empty placeholders if needed
-        if (img.src && img.src !== "_placeholder") {
-          const image = document.createElement('img');
-          image.src = img.src;
-          image.alt = img.alt || '';
-          container.appendChild(image);
-        }
-      });
-    })
-    .catch(err => {
-      console.error('Error loading gallery:', err);
+fetch("data/galary.json")
+  .then(response => response.json())
+  .then(data => {
+    const carousel = document.getElementById('gallery-carousel');
+    const items = [];
+
+    data.forEach(img => {
+      if (img.src && img.src !== "_placeholder") {
+        const div = document.createElement('div');
+        div.classList.add('carousel-item');
+
+        const image = document.createElement('img');
+        image.src = img.src;
+        image.alt = img.alt || '';
+
+        div.appendChild(image);
+        carousel.appendChild(div);
+        items.push(div);
+      }
     });
+
+    // Fade carousel logic
+    if (items.length > 0) {
+      let current = 0;
+      items[current].classList.add('active');
+
+      setInterval(() => {
+        items[current].classList.remove('active');
+        current = (current + 1) % items.length;
+        items[current].classList.add('active');
+      }, 5000); // Change image every 3 seconds
+    }
+  })
+  .catch(err => {
+    console.error('Error loading gallery:', err);
+  });
 </script>
+
 
 
   <!-- Testimonials Section -->
@@ -155,6 +175,7 @@
       console.error('Error loading testimonials:', err);
     });
 </script>
+
 
 </body>
 <!-- Footer -->
