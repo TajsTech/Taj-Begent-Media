@@ -1,15 +1,19 @@
 [
+    {
+    "src": "images/Taj Begent Media_Light.png",
+    "alt": "Logo"
+  },
   {
     "src": "gallary_images/2022_production_rehersal.jpg",
     "alt": "Event 1"
   },
   {
     "src": "gallary_images/chamsys_demo_1.png",
-    "alt": "Event 1"
+    "alt": "chamsys demo 1"
   },
   {
     "src": "gallary_images/chamsys_demo_2.png",
-    "alt": "Event 1"
+    "alt": "chamsys demo 2"
   }
   
 
